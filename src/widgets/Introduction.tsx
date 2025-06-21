@@ -1,86 +1,69 @@
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import React from 'react';
-import { height, width } from '../utils/constants';
 import colors from '../theme/colors';
+import { height, width } from '../utils/constants';
 
 const Introduction: React.FC = () => {
   return (
-    <View style={styles.bg}>
-      <View style={styles.card}>
-        <View style={styles.leftSection}>
-          <Text style={styles.title}>Special Offers! 🔥</Text>
-          <Text style={styles.discount}>Up to 70% OFF</Text>
-        </View>
-        <View style={styles.rightSection}>
-          <Image
-            source={require('../assets/images/intro1.png')}
-            style={styles.image}
-            resizeMode="contain"
-          />
-        </View>
+    <View style={styles.container}>
+      <View style={styles.textContainer}>
+        <Text style={styles.title}>Deals You'll Love ❤️</Text>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>Up to 70% OFF</Text>
+        </TouchableOpacity>
       </View>
+      <Image
+        source={require('../assets/images/intro-.png')}
+        style={styles.image}
+        resizeMode="contain"
+      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  bg: {
-    flex: 1,
+  container: {
     backgroundColor: colors.PRIMARY,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: 24,
-    borderRadius: 30,
-  },
-  card: {
+    borderRadius: 24,
+    padding: 15,
+    marginHorizontal: 10,
+    marginTop: 10,
     flexDirection: 'row',
-    backgroundColor: colors.PRIMARY,
-    borderRadius: 20,
-    width: width - 10,
-    minHeight: height * 0.15,
+    height: height * 0.22,
+    position: 'relative',
+    overflow: 'visible',
     alignItems: 'center',
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    elevation: 4,
+    marginBottom: 20,
   },
-  leftSection: {
+  textContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-    paddingRight: 10,
-    paddingLeft: 15,
+    zIndex: 1,
   },
   title: {
-    color: '#fff',
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: 'bold',
-    lineHeight: 34,
-    letterSpacing: 0.2,
-    marginBottom: 10,
+    color: 'white',
+    lineHeight: 32,
   },
-  discount: {
+  button: {
+    backgroundColor: 'white',
+    borderRadius: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    marginTop: 12,
+    alignSelf: 'flex-start',
+  },
+  buttonText: {
     color: '#48D861',
-    backgroundColor: colors.WHITE,
-    fontSize: 18,
-    fontWeight: '700',
-    borderRadius: 10,
-    marginTop: 6,
-    letterSpacing: 0.5,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    textAlign: 'center',
-  },
-  rightSection: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'flex-end',
+    fontWeight: 'bold',
+    fontSize: 14,
   },
   image: {
-    width: width * 0.7,
-    height: height * 0.15,
-    borderRadius: 10,
-    resizeMode: 'contain',
-    padding: 5,
+    width: width * 0.75,
+    height: height * 0.22,
+    position: 'absolute',
+    right: -100,
+    bottom: -10,
   },
 });
 

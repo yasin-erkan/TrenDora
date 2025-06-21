@@ -28,15 +28,24 @@ const cartSlice = createSlice({
       }
     },
     incrementQuantity: (state, action: PayloadAction<number>) => {
-      const item = state.cart.find(item => item.id === action.payload);
-      if (item) {
-        item.quantity++;
+      const cartItem = state.cart.find(
+        cartItem => cartItem.id === action.payload,
+      );
+      if (cartItem) {
+        cartItem.quantity++;
       }
     },
     decrementQuantity: (state, action: PayloadAction<number>) => {
-      const item = state.cart.find(item => item.id === action.payload);
-      if (item && item.quantity > 1) {
-        item.quantity--;
+      const cartItem = state.cart.find(
+        cartItem => cartItem.id === action.payload,
+      );
+      if (cartItem) {
+        if (cartItem.quantity > 1) {
+          cartItem.quantity--;
+        } else {
+          // Remove item when quantity reaches 0
+          state.cart = state.cart.filter(item => item.id !== action.payload);
+        }
       }
     },
     removeFromCart: (state, action: PayloadAction<number>) => {

@@ -54,6 +54,17 @@ const styles = StyleSheet.create({
   container: {
     width: width / 2 - 30,
     margin: 10,
+    backgroundColor: colors.WHITE,
+    borderRadius: 12,
+    padding: 8,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   imageContainer: {
     backgroundColor: colors.GRAY,

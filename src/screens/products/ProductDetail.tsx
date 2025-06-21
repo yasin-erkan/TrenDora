@@ -7,24 +7,32 @@ import {
   View,
   Text,
 } from 'react-native';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/store';
 import { getSingleProduct } from '../../store/actions/productsActions';
 import { height, width } from '../../utils/constants';
-import { ArrowLeft2, Heart, Like1, Logout, Star1 } from 'iconsax-react-native';
+import {
+  ArrowLeft2,
+  Heart,
+  Like1,
+  Logout,
+  Star1,
+  TickCircle,
+} from 'iconsax-react-native';
 import colors from '../../theme/colors';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/types';
 import Button from '../../components/ui/Button';
 import { PRODUCTDETAIL } from '../../utils/routes';
 import { addToCart } from '../../store/slices/cartSlice';
-import { Product } from '../../models/data/productsState';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import CustomModal from '../../components/ui/Modal';
 
 type Props = NativeStackScreenProps<RootStackParamList, typeof PRODUCTDETAIL>;
 
 const ProductDetail = ({ navigation, route }: Props) => {
+  const [modalVisible, setModalVisible] = useState(false);
   const { productId } = route.params;
   const { productDetailData, pendingDetail } = useSelector(
     (state: RootState) => state.products,
@@ -38,9 +46,22 @@ const ProductDetail = ({ navigation, route }: Props) => {
 
   return (
     <View style={styles.container}>
+      <CustomModal
+        title="Added to the chart successfully !!"
+        description="You can see the product in the cart"
+        icon={<TickCircle size={60} color={colors.SUCCESS} variant="Bold" />}
+        buttonText="Go to Cart"
+        cancelButtonText="Cancel"
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        onConfirm={() => {
+          setModalVisible(false);
+          navigation.navigate('My Cart');
+        }}
+      />
       {pendingDetail ? (
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color={colors.DARK_GRAY} />
+          <ActivityIndicator size="large" color={colors.PRIMARY} />
         </View>
       ) : (
         <>
@@ -126,6 +147,7 @@ const ProductDetail = ({ navigation, route }: Props) => {
                         }),
                       );
                     }
+                    setModalVisible(true);
                   }}
                   title="Add to Cart"
                 />
@@ -139,6 +161,11 @@ const ProductDetail = ({ navigation, route }: Props) => {
 };
 
 const styles = StyleSheet.create({
+  modalContainer: {
+    flex: 1,
+    backgroundColor: colors.WHITE,
+  },
+
   container: {
     flex: 1,
     backgroundColor: colors.WHITE,

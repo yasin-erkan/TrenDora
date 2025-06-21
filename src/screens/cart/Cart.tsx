@@ -11,13 +11,17 @@ import colors from '../../theme/colors';
 import { RootState } from '../../store/store';
 import { useSelector } from 'react-redux';
 import CartItem from '../../components/cart/CartItem';
+import EmptyCart from '../../components/cart/EmptyCart';
 import { Product } from '../../models/data/productsState';
+import { useNavigation } from '@react-navigation/native';
+import { NavigationProp } from '@react-navigation/native';
 
 const Cart: React.FC = () => {
   const { cart } = useSelector((state: RootState) => state.cart);
   const [subtotal, setSubtotal] = useState<number>(0);
   const [deliveryFee] = useState<number>(5.0);
   const [discount] = useState<number>(10.0);
+  const navigation = useNavigation<NavigationProp<any>>();
 
   useEffect(() => {
     const calculatedSubtotal = cart.reduce(
@@ -27,43 +31,63 @@ const Cart: React.FC = () => {
     setSubtotal(calculatedSubtotal);
   }, [cart]);
 
-  const total = subtotal + deliveryFee - discount;
+  const total = cart.length > 0 ? subtotal + deliveryFee - discount : 0;
 
   const renderItem = ({ item }: { item: Product }) => (
     <CartItem product={item} />
   );
 
+  const handleStartShopping = () => {
+    navigation.navigate('Tabbar');
+  };
+
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList
-        data={cart}
-        renderItem={renderItem}
-        keyExtractor={item => item.id.toString()}
-        contentContainerStyle={styles.listContainer}
-        showsVerticalScrollIndicator={false}
-      />
-      <View style={styles.checkoutContainer}>
-        <View style={styles.priceDetailRow}>
-          <Text style={styles.priceDetailText}>Subtotal</Text>
-          <Text style={styles.priceDetailValue}>${subtotal.toFixed(2)}</Text>
-        </View>
-        <View style={styles.priceDetailRow}>
-          <Text style={styles.priceDetailText}>Delivery Fee</Text>
-          <Text style={styles.priceDetailValue}>${deliveryFee.toFixed(2)}</Text>
-        </View>
-        <View style={styles.priceDetailRow}>
-          <Text style={styles.priceDetailText}>Discount</Text>
-          <Text style={styles.priceDetailValue}>-${discount.toFixed(2)}</Text>
-        </View>
-        <View style={styles.separator} />
-        <View style={styles.totalContainer}>
-          <Text style={styles.totalText}>Total:</Text>
-          <Text style={styles.totalPrice}>${total.toFixed(2)}</Text>
-        </View>
-        <TouchableOpacity style={styles.checkoutButton}>
-          <Text style={styles.checkoutButtonText}>Checkout</Text>
-        </TouchableOpacity>
-      </View>
+      {cart.length === 0 ? (
+        <EmptyCart onStartShopping={handleStartShopping} />
+      ) : (
+        <>
+          <FlatList
+            data={cart}
+            renderItem={renderItem}
+            keyExtractor={item => item.id.toString()}
+            contentContainerStyle={styles.listContainer}
+            showsVerticalScrollIndicator={false}
+          />
+          <View style={styles.checkoutContainer}>
+            <View style={styles.priceDetailRow}>
+              <Text style={styles.priceDetailText}>Subtotal</Text>
+              <Text style={styles.priceDetailValue}>
+                ${subtotal.toFixed(2)}
+              </Text>
+            </View>
+            {cart.length > 0 && (
+              <>
+                <View style={styles.priceDetailRow}>
+                  <Text style={styles.priceDetailText}>Delivery Fee</Text>
+                  <Text style={styles.priceDetailValue}>
+                    ${deliveryFee.toFixed(2)}
+                  </Text>
+                </View>
+                <View style={styles.priceDetailRow}>
+                  <Text style={styles.priceDetailText}>Discount</Text>
+                  <Text style={styles.priceDetailValue}>
+                    -${discount.toFixed(2)}
+                  </Text>
+                </View>
+              </>
+            )}
+            <View style={styles.separator} />
+            <View style={styles.totalContainer}>
+              <Text style={styles.totalText}>Total:</Text>
+              <Text style={styles.totalPrice}>${total.toFixed(2)}</Text>
+            </View>
+            <TouchableOpacity style={styles.checkoutButton}>
+              <Text style={styles.checkoutButtonText}>Checkout</Text>
+            </TouchableOpacity>
+          </View>
+        </>
+      )}
     </SafeAreaView>
   );
 };

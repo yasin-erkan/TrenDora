@@ -41,19 +41,19 @@ export default Header;
 
 const styles = StyleSheet.create({
   container: {
-    height: height / 10,
+    height: height / 9,
     backgroundColor: colors.WHITE,
     justifyContent: 'space-between',
-    padding: 5,
+    padding: 15,
     flexDirection: 'row',
     alignItems: 'center',
     paddingTop: 10,
-    paddingBottom: 10,
+    paddingBottom: 5,
   },
   text: {
-    fontSize: 24,
-    color: colors.SECONDARY,
-    fontWeight: '600',
+    fontSize: 26,
+    color: colors.BLACK,
+    fontWeight: '700',
   },
   bagWrapper: {
     position: 'absolute',
