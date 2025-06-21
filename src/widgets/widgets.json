@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "title": "Search",
+    "slug": "search"
+  },
+  {
+    "id": 2,
+    "title": "Introduction",
+    "slug": "introduction"
+  },
+  {
+    "id": 3,
+    "title": "Categories",
+    "slug": "categories"
+  },
+  {
+    "id": 4,
+    "title": "Best Seller",
+    "slug": "best-seller"
+  }
+]

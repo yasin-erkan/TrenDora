@@ -1,0 +1,9 @@
+export const TABBAR = 'Tabbar';
+export const HOME = 'Home';
+export const SEARCH = 'Search';
+export const FAVOURITE = 'Favourite';
+export const PROFILE = 'Profile';
+export const CATEGORIES = 'Categories';
+export const PRODUCTSLISTSCREEN = 'Products List';
+export const PRODUCTDETAIL = 'Product Detail';
+export const CART = 'My Cart';
