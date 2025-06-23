@@ -118,6 +118,7 @@ pids
 
 # Large media files (if not needed in repo)
 *.gif
+!trendora.gif
 *.mp4
 *.mov
 *.avi
