@@ -7,7 +7,7 @@ const Introduction: React.FC = () => {
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>
-        <Text style={styles.title}>Deals You'll Love ❤️</Text>
+        <Text style={styles.title}>Deals You'll Love</Text>
         <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText}>Up to 70% OFF</Text>
         </TouchableOpacity>
@@ -17,6 +17,7 @@ const Introduction: React.FC = () => {
         style={styles.image}
         resizeMode="contain"
       />
+      <Text style={styles.heartIcon}>💖</Text>
     </View>
   );
 };
@@ -54,16 +55,24 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   buttonText: {
-    color: '#48D861',
+    color: colors.RED,
     fontWeight: 'bold',
     fontSize: 14,
   },
   image: {
-    width: width * 0.75,
-    height: height * 0.22,
+    width: width * 0.7,
+    height: height * 0.27,
     position: 'absolute',
-    right: -100,
-    bottom: -10,
+    right: -92,
+    top: -25,
+    bottom: 0,
+  },
+  heartIcon: {
+    position: 'absolute',
+    top: '31%',
+    right: '30%',
+    fontSize: 25,
+    transform: [{ rotate: '15deg' }],
   },
 });
 

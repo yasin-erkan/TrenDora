@@ -8,7 +8,7 @@ import colors from '../theme/colors';
 const Search: React.FC = () => {
   return (
     <View style={defaultScreenStyle.container}>
-      <Input style={styles.input} placeholder="Search" />
+      <Input placeholder="Search" showIcon />
     </View>
   );
 };

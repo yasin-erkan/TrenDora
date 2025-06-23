@@ -1,11 +1,24 @@
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import {
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+} from 'react-native';
 import React from 'react';
 import { Product } from '../../models/data/productsState';
 import colors from '../../theme/colors';
 import { width } from '../../utils/constants';
-import { Star1 } from 'iconsax-react-native';
+import { Star1, Heart } from 'iconsax-react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { PRODUCTDETAIL } from '../../utils/routes';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../../store/store';
+import {
+  addToFavorite,
+  removeFromFavorite,
+} from '../../store/slices/favoriteSlice';
 
 interface ProductItemProps {
   product: Product;
@@ -13,6 +26,24 @@ interface ProductItemProps {
 
 const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
   const navigation = useNavigation<NavigationProp<any>>();
+  const dispatch = useDispatch();
+  const { favorites } = useSelector((state: RootState) => state.favorite);
+  const { isLogin } = useSelector((state: RootState) => state.auth);
+
+  const isProductInFavorites = favorites.some(fav => fav.id === product.id);
+
+  const handleFavorite = () => {
+    if (!isLogin) {
+      // You could show a login modal here
+      return;
+    }
+
+    if (isProductInFavorites) {
+      dispatch(removeFromFavorite(product.id));
+    } else {
+      dispatch(addToFavorite(product));
+    }
+  };
 
   return (
     <Pressable
@@ -28,6 +59,19 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
             source={{ uri: product.images[0] as string }}
           />
         )}
+        <TouchableOpacity
+          style={styles.heartButton}
+          onPress={e => {
+            e.stopPropagation();
+            handleFavorite();
+          }}
+        >
+          <Heart
+            size={16}
+            color={isProductInFavorites ? colors.RED : colors.DARK_GRAY}
+            variant={isProductInFavorites ? 'Bold' : 'Outline'}
+          />
+        </TouchableOpacity>
       </View>
 
       <View style={styles.nameContainer}>
@@ -43,7 +87,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
         </View>
       </View>
 
-      <Text style={styles.price}>${product.price}.00</Text>
+      <Text style={styles.price}>${product.price.toFixed(2)}</Text>
     </Pressable>
   );
 };
@@ -109,5 +153,21 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     flex: 6,
+  },
+  heartButton: {
+    position: 'absolute',
+    top: 8,
+    right: 8,
+    backgroundColor: colors.WHITE,
+    borderRadius: 12,
+    padding: 4,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    elevation: 2,
   },
 });

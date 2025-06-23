@@ -1,7 +1,11 @@
 import { Product } from './productsState';
 
-interface CartState {
-  cart: Product[];
+export interface CartItem extends Product {
+  quantity: number;
+}
+
+export interface CartState {
+  cart: CartItem[];
   pending: boolean;
 }
 

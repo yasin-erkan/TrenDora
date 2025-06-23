@@ -5,8 +5,8 @@ import { PRODUCTS_URL } from '../../service/url';
 const transformProductData = (data: any) => {
   return {
     ...data,
-    priceDiscount: data.price * 1.2, // 20% daha yüksek fiyat gösterip indirim yapıyoruz
-    images: data.images.map((img: string) => img.replace(/\[|\]/g, '')), // API'den gelen image URL'lerini düzeltiyoruz
+    priceDiscount: data.price * 1.2,
+    images: data.images.map((img: string) => img.replace(/\[|\]/g, '')),
   };
 };
 

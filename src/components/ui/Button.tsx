@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -13,11 +14,21 @@ interface Props extends TouchableOpacityProps {
 }
 
 const Button: React.FC<Props> = props => {
-  const { title, ...rest } = props;
+  const { title, disabled } = props;
 
   return (
-    <TouchableOpacity {...rest} style={[styles.container, props.style]}>
-      <Text style={styles.title}>{title}</Text>
+    <TouchableOpacity
+      {...props}
+      style={[
+        styles.container,
+        { backgroundColor: disabled ? colors.GRAY : colors.PRIMARY },
+      ]}
+    >
+      {disabled ? (
+        <ActivityIndicator color={colors.WHITE} size="small" />
+      ) : (
+        <Text style={styles.title}>{title}</Text>
+      )}
     </TouchableOpacity>
   );
 };

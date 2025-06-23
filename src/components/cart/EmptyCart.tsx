@@ -1,69 +1,53 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React from 'react';
-import { ShoppingBag, ArrowRight2 } from 'iconsax-react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import colors from '../../theme/colors';
 
 interface EmptyCartProps {
-  onStartShopping?: () => void;
+  onStartShopping: () => void;
 }
 
 const EmptyCart: React.FC<EmptyCartProps> = ({ onStartShopping }) => {
   return (
     <View style={styles.container}>
-      <View style={styles.iconContainer}>
-        <ShoppingBag size={100} color={colors.RED} />
-      </View>
       <Text style={styles.title}>Your cart is empty</Text>
-      <Text style={styles.subtitle}>
-        Looks like you haven't added any items to your cart yet
-      </Text>
+      <Text style={styles.subtitle}>Add some products to get started</Text>
       <TouchableOpacity style={styles.button} onPress={onStartShopping}>
-        <Text style={styles.buttonText}>Start Shopping Now !</Text>
-        <ArrowRight2 size={20} color={colors.WHITE} />
+        <Text style={styles.buttonText}>Start Shopping</Text>
       </TouchableOpacity>
     </View>
   );
 };
+
+export default EmptyCart;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 40,
-  },
-  iconContainer: {
-    marginBottom: 24,
+    padding: 20,
   },
   title: {
     fontSize: 24,
-    fontWeight: '800',
+    fontWeight: 'bold',
     color: colors.BLACK,
-    marginBottom: 12,
-    textAlign: 'center',
+    marginBottom: 8,
   },
   subtitle: {
     fontSize: 16,
-    color: colors.BLACK,
-    fontWeight: '500',
+    color: colors.DARK_GRAY,
+    marginBottom: 30,
     textAlign: 'center',
-    lineHeight: 22,
-    marginBottom: 32,
   },
   button: {
-    backgroundColor: colors.INFO,
-    paddingHorizontal: 24,
-    paddingVertical: 16,
-    borderRadius: 12,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+    backgroundColor: colors.PRIMARY,
+    paddingHorizontal: 30,
+    paddingVertical: 15,
+    borderRadius: 10,
   },
   buttonText: {
     color: colors.WHITE,
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: 'bold',
   },
 });
-
-export default EmptyCart;

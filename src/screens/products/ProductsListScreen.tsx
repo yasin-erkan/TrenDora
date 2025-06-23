@@ -1,10 +1,4 @@
-import {
-  ActivityIndicator,
-  FlatList,
-  StyleSheet,
-  View,
-  Text,
-} from 'react-native';
+import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native';
 import React, { useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import defaultScreenStyle from '../../styles/defaultScreenStyle';
@@ -13,8 +7,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getProducts } from '../../store/actions/productsActions';
 import colors from '../../theme/colors';
 import ProductItem from '../../components/products/ProductItem';
+import { RouteProp } from '@react-navigation/native';
 
-const ProductsListScreen: React.FC = ({ route, navigation }) => {
+const ProductsListScreen: React.FC<{ route: RouteProp<any> }> = ({ route }) => {
   const categorySlug = route?.params?.categorySlug;
   const { products, pending } = useSelector(
     (state: RootState) => state.products,
@@ -27,7 +22,7 @@ const ProductsListScreen: React.FC = ({ route, navigation }) => {
         categorySlug: categorySlug === 'all' ? '' : categorySlug,
       }),
     );
-  }, [categorySlug]);
+  }, [categorySlug, dispatch]);
 
   return (
     <SafeAreaView style={defaultScreenStyle.safeAreaViewStyle}>

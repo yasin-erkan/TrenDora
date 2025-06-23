@@ -9,7 +9,6 @@ import {
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
-import { width, height } from '../utils/constants';
 import colors from '../theme/colors';
 import { Star1, ArrowRight2 } from 'iconsax-react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -20,7 +19,6 @@ const BestSeller = () => {
   const { products } = useSelector((state: RootState) => state.products);
   const navigation = useNavigation<NavigationProp<any>>();
 
-  // En popüler 6 ürün seç (id'ye göre sırala)
   const bestProducts = products
     .filter(p => p.images && p.images.length > 0)
     .sort((a, b) => b.id - a.id)

@@ -1,3 +1,5 @@
+import { Product } from './productsState';
+
 interface Category {
   id: number;
   name: string;
@@ -5,6 +7,7 @@ interface Category {
   image: string;
   creationAt: string;
   updatedAt: string;
+  products: Product[];
 }
 
 interface CategoriesState {

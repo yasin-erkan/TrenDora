@@ -1,7 +1,4 @@
-import { ImageSourcePropType } from 'react-native';
-import { Category } from './categoriesState';
-
-interface Product {
+export interface Product {
   id: number;
   title: string;
   description: string;
@@ -11,6 +8,7 @@ interface Product {
   category: string;
   slug: string;
   quantity: number;
+  isFavorite: boolean;
 }
 
 interface ProductsState {
@@ -22,4 +20,4 @@ interface ProductsState {
   error: string | null;
 }
 
-export type { ProductsState, Product };
+export type { ProductsState };

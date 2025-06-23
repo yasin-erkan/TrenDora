@@ -10,6 +10,8 @@ export type RootStackParamList = {
   BestSeller: { widget: (typeof widgets)[0] } | undefined;
   'Products List': { categorySlug: string } | undefined;
   'Product Detail': { productId: number };
+
+  
   // Add other routes as needed
 };
 

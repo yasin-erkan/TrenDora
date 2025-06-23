@@ -6,31 +6,13 @@ import {
   getSingleProduct,
 } from '../actions/productsActions';
 
-interface Product {
-  id: string;
-  title: string;
-  description: string;
-  price: number;
-  priceDiscount: number;
-  images: string[];
-  category: string;
-}
-
-interface ProductsState {
-  products: Product[];
-  productsFilterCategory: Product[];
-  productDetailData: Product | null;
-  pending: boolean;
-  pendingDetail: boolean;
-  error: string | null;
-}
-
 const initialState: ProductsState = {
   products: [],
   productsFilterCategory: [],
+  productDetailData: null,
   pending: false,
-  productSingleData: {},
   pendingDetail: false,
+  error: null,
 };
 
 const productsSlice = createSlice({
@@ -47,7 +29,7 @@ const productsSlice = createSlice({
     });
     builder.addCase(getProducts.rejected, (state, action) => {
       state.pending = false;
-      state.error = action.error.message;
+      state.error = action.error.message ?? 'Something went wrong';
     });
 
     builder.addCase(getProductsFilterCategory.pending, state => {
@@ -60,7 +42,7 @@ const productsSlice = createSlice({
     });
     builder.addCase(getProductsFilterCategory.rejected, (state, action) => {
       state.pending = false;
-      state.error = action.error.message;
+      state.error = action.error.message ?? 'Something went wrong';
     });
 
     builder.addCase(getSingleProduct.pending, state => {
@@ -72,7 +54,7 @@ const productsSlice = createSlice({
     });
     builder.addCase(getSingleProduct.rejected, (state, action) => {
       state.pendingDetail = false;
-      state.error = action.error.message;
+      state.error = action.error.message ?? 'Something went wrong';
     });
   },
 });

@@ -7,7 +7,6 @@ const getCategories = createAsyncThunk(
   async (params: object) => {
     try {
       const response = await getRequest(CATEGORIES_URL, params);
-      console.log('categories', response.data);
       return response.data;
     } catch (error) {
       return error;

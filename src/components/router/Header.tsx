@@ -5,6 +5,7 @@ import {
   View,
   SafeAreaView,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import colors from '../../theme/colors';
 import { height } from '../../utils/constants';
@@ -20,9 +21,18 @@ const Header: React.FC = () => {
   return (
     <SafeAreaView>
       <View style={styles.container}>
-        <Text style={styles.text}>Discover</Text>
+        <View style={styles.logoContainer}>
+          <View style={styles.iconContainer}>
+            <Image
+              source={require('../../assets/images/trendora.png')}
+              style={styles.trendora}
+            />
+          </View>
+          <Text style={styles.appName}>TrenDora</Text>
+        </View>
+
         <TouchableOpacity
-          onPress={() => navigation.navigate(CART)}
+          onPress={() => navigation.navigate(CART as never)}
           style={styles.bagWrapper}
         >
           <View style={styles.bagContainer}>
@@ -50,10 +60,36 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 5,
   },
-  text: {
-    fontSize: 26,
+  logoContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  iconContainer: {
+    backgroundColor: colors.GRAY,
+    padding: 4,
+    borderRadius: 16,
+    marginRight: 5,
+    shadowColor: colors.PRIMARY,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  appName: {
+    fontSize: 28,
     color: colors.BLACK,
     fontWeight: '700',
+    fontFamily: '',
+    letterSpacing: -0.5,
+  },
+  trendora: {
+    width: 30,
+    height: 30,
+    resizeMode: 'contain',
+    borderRadius: 100,
   },
   bagWrapper: {
     position: 'absolute',
@@ -74,8 +110,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   bagIcon: {
-    width: 24,
-    height: 24,
+    fontSize: 20,
     color: colors.SECONDARY,
   },
   bagCount: {

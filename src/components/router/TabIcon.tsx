@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { FAVOURITE, HOME, PROFILE, SEARCH } from '../../utils/routes';
+import { FAVORITE, HOME, PROFILE, SEARCH } from '../../utils/routes';
 import { Heart, Home2, SearchNormal, User, Home } from 'iconsax-react-native';
 
 type Props = RouteType<'tabIcon'>;
@@ -23,7 +22,7 @@ const TabIcon: React.FC<Props> = ({ name, size, color, focused }) => {
           size={size}
         />
       );
-    case FAVOURITE:
+    case FAVORITE:
       return (
         <Heart
           color={color}

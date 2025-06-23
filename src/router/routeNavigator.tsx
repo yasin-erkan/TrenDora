@@ -3,8 +3,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {
   CART,
   CATEGORIES,
+  LOGIN,
   PRODUCTDETAIL,
   PRODUCTSLISTSCREEN,
+  SIGNUP,
   TABBAR,
 } from '../utils/routes';
 import TabNavigator from './tabNavigator';
@@ -12,10 +14,21 @@ import CategoriesScreen from '../screens/categories/CategoriesScreen';
 import ProductsListScreen from '../screens/products/ProductsListScreen';
 import ProductDetail from '../screens/products/ProductDetail';
 import Cart from '../screens/cart/Cart';
+import Login from '../screens/authScreen/Login';
 import { RootStackParamList } from '../navigation/types';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../store/store';
+import SignUp from '../screens/signupScreen.tsx/SignUp';
+import { checkUser } from '../store/actions/authActions';
 
 const RouteNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    dispatch(checkUser());
+  }, [dispatch]);
 
   return (
     <Stack.Navigator
@@ -48,6 +61,16 @@ const RouteNavigator = () => {
         options={{ headerShown: false }}
         name={PRODUCTDETAIL}
         component={ProductDetail}
+      />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name={LOGIN}
+        component={Login}
+      />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name={SIGNUP}
+        component={SignUp}
       />
     </Stack.Navigator>
   );

@@ -47,45 +47,45 @@ const Cart: React.FC = () => {
         <EmptyCart onStartShopping={handleStartShopping} />
       ) : (
         <>
-          <FlatList
-            data={cart}
-            renderItem={renderItem}
-            keyExtractor={item => item.id.toString()}
-            contentContainerStyle={styles.listContainer}
-            showsVerticalScrollIndicator={false}
-          />
-          <View style={styles.checkoutContainer}>
-            <View style={styles.priceDetailRow}>
-              <Text style={styles.priceDetailText}>Subtotal</Text>
+      <FlatList
+        data={cart}
+        renderItem={renderItem}
+        keyExtractor={item => item.id.toString()}
+        contentContainerStyle={styles.listContainer}
+        showsVerticalScrollIndicator={false}
+      />
+      <View style={styles.checkoutContainer}>
+        <View style={styles.priceDetailRow}>
+          <Text style={styles.priceDetailText}>Subtotal</Text>
               <Text style={styles.priceDetailValue}>
                 ${subtotal.toFixed(2)}
               </Text>
-            </View>
+        </View>
             {cart.length > 0 && (
               <>
-                <View style={styles.priceDetailRow}>
-                  <Text style={styles.priceDetailText}>Delivery Fee</Text>
+        <View style={styles.priceDetailRow}>
+          <Text style={styles.priceDetailText}>Delivery Fee</Text>
                   <Text style={styles.priceDetailValue}>
                     ${deliveryFee.toFixed(2)}
                   </Text>
-                </View>
-                <View style={styles.priceDetailRow}>
-                  <Text style={styles.priceDetailText}>Discount</Text>
+        </View>
+        <View style={styles.priceDetailRow}>
+          <Text style={styles.priceDetailText}>Discount</Text>
                   <Text style={styles.priceDetailValue}>
                     -${discount.toFixed(2)}
                   </Text>
-                </View>
+        </View>
               </>
             )}
-            <View style={styles.separator} />
-            <View style={styles.totalContainer}>
-              <Text style={styles.totalText}>Total:</Text>
-              <Text style={styles.totalPrice}>${total.toFixed(2)}</Text>
-            </View>
-            <TouchableOpacity style={styles.checkoutButton}>
-              <Text style={styles.checkoutButtonText}>Checkout</Text>
-            </TouchableOpacity>
-          </View>
+        <View style={styles.separator} />
+        <View style={styles.totalContainer}>
+          <Text style={styles.totalText}>Total:</Text>
+          <Text style={styles.totalPrice}>${total.toFixed(2)}</Text>
+        </View>
+        <TouchableOpacity style={styles.checkoutButton}>
+          <Text style={styles.checkoutButtonText}>Checkout</Text>
+        </TouchableOpacity>
+      </View>
         </>
       )}
     </SafeAreaView>

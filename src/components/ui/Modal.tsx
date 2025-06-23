@@ -35,12 +35,12 @@ const CustomModal: React.FC<CustomModalProps> = ({
               <Text style={styles.textStyle}>{buttonText || 'OK'}</Text>
             </Pressable>
             {cancelButtonText && (
-              <Pressable
+          <Pressable
                 style={[styles.button, styles.cancelButton]}
                 onPress={onClose}
-              >
+          >
                 <Text style={styles.cancelTextStyle}>{cancelButtonText}</Text>
-              </Pressable>
+          </Pressable>
             )}
           </View>
         </View>

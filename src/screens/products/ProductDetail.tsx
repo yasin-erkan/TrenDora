@@ -16,6 +16,7 @@ import {
   ArrowLeft2,
   Heart,
   Like1,
+  LoginCurve,
   Logout,
   Star1,
   TickCircle,
@@ -24,8 +25,12 @@ import colors from '../../theme/colors';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/types';
 import Button from '../../components/ui/Button';
-import { PRODUCTDETAIL } from '../../utils/routes';
+import { LOGIN, PRODUCTDETAIL } from '../../utils/routes';
 import { addToCart } from '../../store/slices/cartSlice';
+import {
+  addToFavorite,
+  removeFromFavorite,
+} from '../../store/slices/favoriteSlice';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import CustomModal from '../../components/ui/Modal';
 
@@ -33,12 +38,38 @@ type Props = NativeStackScreenProps<RootStackParamList, typeof PRODUCTDETAIL>;
 
 const ProductDetail = ({ navigation, route }: Props) => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [isFavoriteModalVisible, setIsFavoriteModalVisible] = useState(false);
+  const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
+
   const { productId } = route.params;
   const { productDetailData, pendingDetail } = useSelector(
     (state: RootState) => state.products,
   );
 
+  const { isLogin } = useSelector((state: RootState) => state.auth);
+  const { favorites } = useSelector((state: RootState) => state.favorite);
+
   const dispatch: AppDispatch = useDispatch();
+
+  const isProductInFavorites = productDetailData
+    ? favorites.some(fav => fav.id === Number(productDetailData.id))
+    : false;
+
+  const handleFavorite = () => {
+    if (!isLogin) {
+      setIsFavoriteModalVisible(true);
+    } else {
+      // User is logged in, toggle favorite
+      if (productDetailData) {
+        if (isProductInFavorites) {
+          dispatch(removeFromFavorite(productDetailData.id));
+        } else {
+          dispatch(addToFavorite(productDetailData));
+          setIsLoginModalVisible(true);
+        }
+      }
+    }
+  };
 
   useEffect(() => {
     dispatch(getSingleProduct(productId));
@@ -59,6 +90,35 @@ const ProductDetail = ({ navigation, route }: Props) => {
           navigation.navigate('My Cart');
         }}
       />
+
+      <CustomModal
+        title="Login, please"
+        description="You can add this product to your favorites list after login"
+        icon={<LoginCurve size={60} color={colors.PRIMARY} variant="Bold" />}
+        buttonText="Login"
+        cancelButtonText="Cancel"
+        visible={isFavoriteModalVisible}
+        onClose={() => setIsFavoriteModalVisible(false)}
+        onConfirm={() => {
+          setIsFavoriteModalVisible(false);
+          navigation.navigate(LOGIN);
+        }}
+      />
+
+      <CustomModal
+        title="Added to favorites"
+        description="Product added to your favorites list "
+        icon={<Heart size={60} color={colors.PRIMARY} variant="Bold" />}
+        buttonText="Go to your favorites"
+        cancelButtonText="Cancel"
+        visible={isLoginModalVisible}
+        onClose={() => setIsLoginModalVisible(false)}
+        onConfirm={() => {
+          setIsLoginModalVisible(false);
+          navigation.navigate('Tabbar', { screen: 'Favorite' });
+        }}
+      />
+
       {pendingDetail ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color={colors.PRIMARY} />
@@ -80,8 +140,15 @@ const ProductDetail = ({ navigation, route }: Props) => {
                   </Pressable>
 
                   <View style={styles.headerRight}>
-                    <Pressable style={styles.backContainer}>
-                      <Heart size={24} color={colors.RED} variant="Bold" />
+                    <Pressable
+                      onPress={() => handleFavorite()}
+                      style={styles.backContainer}
+                    >
+                      <Heart
+                        size={24}
+                        color={isProductInFavorites ? colors.RED : colors.BLACK}
+                        variant={isProductInFavorites ? 'Bold' : 'Outline'}
+                      />
                     </Pressable>
                     <Pressable style={styles.backContainer}>
                       <Logout size={24} color={colors.BLACK} />
@@ -132,7 +199,7 @@ const ProductDetail = ({ navigation, route }: Props) => {
                   ${productDetailData?.priceDiscount?.toFixed(2)}
                 </Text>
                 <Text style={styles.priceText}>
-                  ${productDetailData?.price}
+                  ${productDetailData?.price?.toFixed(2)}
                 </Text>
               </View>
 
@@ -144,6 +211,8 @@ const ProductDetail = ({ navigation, route }: Props) => {
                         addToCart({
                           ...productDetailData,
                           id: Number(productDetailData.id),
+                          slug: productDetailData.category || '',
+                          quantity: 1,
                         }),
                       );
                     }
