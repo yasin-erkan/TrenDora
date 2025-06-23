@@ -1,6 +1,6 @@
 # 🛍️ TrenDora - E-Commerce Mobile App
 
-![TrenDora Logo](https://github.com/yasin-erkan/TrenDora/blob/main/Trendora.png)
+![TrenDora_Preview](https://github.com/yasin-erkan/TrenDora/blob/main/trendora.gif)
 
 A modern, feature-rich e-commerce mobile application built with React Native, Redux Toolkit, and TypeScript. TrenDora provides a complete shopping experience with user authentication, product browsing, cart management, and beautiful UI/UX design.
 
